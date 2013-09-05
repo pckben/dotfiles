@@ -22,6 +22,10 @@ filetype plugin indent on
 	\ endif
 
 au BufRead,BufNewFile *.jinja.html set filetype=htmljinja
+au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown
+
+" In Makefiles, use real tabs, not tabs expanded to spaces
+au FileType make setlocal noexpandtab
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -154,3 +158,8 @@ autocmd BufWritePost * :TlistUpdate
 " Only load CloseTag plugin for HTML/XML file"
 autocmd FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
 autocmd FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako source ~/.vim/bundle/closetag/plugin/closetag.vim
+
+" Fugitive
+map <Leader>gs :Git status<CR>
+map <Leader>gc :Git commit<CR>
+map <Leader>gp :Git push<CR>
