@@ -3,6 +3,8 @@ set backspace=indent,eol,start	" allow backspacing in insert mode
 set history=100					" number of commands to keep in history for undo
 set ruler						" always show cursor position
 set incsearch					" incremental searching
+set ignorecase " ignore case when searching
+set smartcase  " ... except when search pattern contains an uppercase char
 "set hlsearch					" highlight search matches
 set number						" show line number
 set scrolloff=3
@@ -74,6 +76,7 @@ set guioptions-=L
 set guioptions-=l
 set guioptions-=R
 set guioptions-=r
+set guioptions+=c " use console dialogs
 
 "--------------
 " Color Scheme
@@ -116,8 +119,8 @@ nmap <C-w>g% :tabedit %<CR>
 let NERDTreeIgnore=['.*\.pyc$']
 
 " display the cursor line and column
-"set cuc
-"set cul
+set cuc
+set cul
 
 " scroll the most recent window
 nmap <C-n> <C-w>p<C-d><C-w>p

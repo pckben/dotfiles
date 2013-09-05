@@ -1,3 +1,6 @@
 **/.svn
 **/.hg
 *.zip
+**/tags
+**/tags-ja
+**/.*.swp
