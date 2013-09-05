@@ -1,0 +1,153 @@
+set nocompatible				" use Vim settings instead of Vi
+set backspace=indent,eol,start	" allow backspacing in insert mode
+set history=100					" number of commands to keep in history for undo
+set ruler						" always show cursor position
+set incsearch					" incremental searching
+"set hlsearch					" highlight search matches
+set number						" show line number
+set scrolloff=3
+"set mouse
+set mouse=a
+
+syntax on
+filetype plugin indent on
+
+" Auto command stuff
+"
+:au BufReadPost * 
+	\ if line("'\"") > 1 && line("'\"") <= line("$") | 
+	\	exe "normal! g`\"" | 
+	\ endif
+
+au BufRead,BufNewFile *.jinja.html set filetype=htmljinja
+
+" Convenient command to see the difference between the current buffer and the
+" file it was loaded from, thus the changes you made.
+" Only define it when not defined already.
+if !exists(":DiffOrig")
+  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
+		  \ | wincmd p | diffthis
+endif
+
+" Enhanced keyboard mappings
+"			
+" save file in normal mode
+map <F2> :w<CR>
+" save file in insert mode
+imap <F2> <ESC>:w<CR>a
+" switch between header/source file
+map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
+" make file
+map	<F7> :wa<CR>:!make<CR><CR>
+
+" open z-shell with F12
+function! ZShell()
+  " Open ZSH with Conque in a split window with height=10
+  :ConqueTermSplit zsh
+  :10winc _
+endfunction
+
+" the "smash" mappings for <ESC> key: just smash the k,j keys at the same time!
+inoremap jk <esc>
+inoremap kj <esc>
+
+set tabstop=2					"
+set shiftwidth=2
+set expandtab
+set cinoptions=l1     " indent C switch statement properly
+"set smartindent
+" wrap complete word
+set nowrap
+set linebreak
+set nolist " list disables linebreak
+set textwidth=80
+":highlight OverLength ctermbg=red ctermfg=white guibg=#592929
+":match OverLength '\%>80v.\+'  " highlight lines longer than 80 column
+"match ErrorMsg '\%>80v.\+'
+set wrapmargin=0
+set formatoptions+=l
+set showbreak=...
+" show partial lines wrapped past the bottom of the screen
+set display=lastline
+
+set guioptions-=L
+set guioptions-=l
+set guioptions-=R
+set guioptions-=r
+
+"--------------
+" Color Scheme
+"--------------
+"set background=light
+let g:solarized_termcolors=256
+let g:solarized_contrast="normal"
+"colorscheme solarized
+"set transparency=5
+set background=dark
+if has('gui_running')
+  colorscheme wombat
+else
+  colorscheme desert
+endif
+
+"folding settings
+"set foldmethod=indent   "fold based on indent
+"set foldnestmax=10      "deepest fold is 10 levels
+"set foldlevel=2         "this is just what i use
+set foldlevelstart=99
+:hi Folded ctermbg=Black ctermfg=DarkGray
+" zo,zc toggling 1 fold
+" zm,zr for toggling folds
+" zM,zR for reducing/increasing fold levels
+" za toggle fold
+function! MyFoldText()
+  let line = getline(v:foldstart)
+  let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
+  return v:folddashes . sub
+endfunction
+:set foldtext=MyFoldText()
+
+" Maximizing current window in a new tab
+nmap <C-w>g% :tabedit %<CR>
+
+:set cinkeys-=0#    " disable putting C/C++ lines starting with # in the first column
+
+" NERDTree ignore patterns
+let NERDTreeIgnore=['.*\.pyc$']
+
+" display the cursor line and column
+"set cuc
+"set cul
+
+" scroll the most recent window
+nmap <C-n> <C-w>p<C-d><C-w>p
+nmap <C-p> <C-w>p<C-u><C-w>p
+
+" Pathogen
+execute pathogen#infect()
+
+" vim powerline plugin
+set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
+
+" open NERDTree and Taglist on startup
+"autocmd VimEnter * NERDTree
+"autocmd VimEnter * wincmd p
+"autocmd VimEnter * Tlist
+"execute "normal <C-w>2h<C-w>K<C-w>j<C-w>h<C-w>K<C-w>2j<C-w>L"
+
+" Must set cmd to use MacPorts ctags
+let Tlist_Ctags_Cmd='/opt/local/bin/ctags'
+" Don't waste 3 columns for the fold column display
+let Tlist_Enable_Fold_Column = 0
+
+map <F10> :NERDTree<CR>
+map <F11> :TagbarToggle<CR>
+map <F12> :call ZShell()<CR>
+
+
+" Auto update taglist on every file write
+autocmd BufWritePost * :TlistUpdate
+
+" Only load CloseTag plugin for HTML/XML file"
+autocmd FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
+autocmd FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako source ~/.vim/bundle/closetag/plugin/closetag.vim
