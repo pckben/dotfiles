@@ -49,6 +49,9 @@
 [submodule "vim/bundle/nerdtree"]
 	path = vim/bundle/nerdtree
 	url = https://github.com/scrooloose/nerdtree
-[submodule "vim/bundle/snipmate"]
-	path = vim/bundle/snipmate
-	url = https://github.com/msanders/snipmate.vim.git
+[submodule "vim/bundle/calendar-vim"]
+	path = vim/bundle/calendar-vim
+	url = https://github.com/mattn/calendar-vim.git
+[submodule "vim/bundle/utl.vim"]
+	path = vim/bundle/utl.vim
+	url = https://github.com/vim-scripts/utl.vim.git
