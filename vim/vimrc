@@ -1,12 +1,14 @@
 set nocompatible				" use Vim settings instead of Vi
 set backspace=indent,eol,start	" allow backspacing in insert mode
-set history=100					" number of commands to keep in history for undo
+set history=700					" number of commands to keep in history for undo
 set ruler						" always show cursor position
 set incsearch					" incremental searching
 set ignorecase " ignore case when searching
 set smartcase  " ... except when search pattern contains an uppercase char
 "set hlsearch					" highlight search matches
 set number						" show line number
+set tw=79 "width of document (used by gd)
+set fo-=t " don't automatically wrap text when typing
 set scrolloff=3
 "set mouse
 set mouse=a
@@ -27,6 +29,10 @@ au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown
 " In Makefiles, use real tabs, not tabs expanded to spaces
 au FileType make setlocal noexpandtab
 
+" In markdown file, press F5 to convert the file to HTML and preview in browser
+au FileType markdown
+  \ map <F5> :!multimarkdown % -o %<.html<CR>:!open %<.html<CR>
+
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
 " Only define it when not defined already.
@@ -37,14 +43,21 @@ endif
 
 " Enhanced keyboard mappings
 "			
-" save file in normal mode
+" save file in normal/insert mode
 map <F2> :w<CR>
-" save file in insert mode
 imap <F2> <ESC>:w<CR>a
 " switch between header/source file
 map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 " make file
 map	<F7> :wa<CR>:!make<CR><CR>
+
+" Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
+nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
+nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
+nnoremap <silent><A-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
+nnoremap <silent><A-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
+nnoremap <silent>∆ :set paste<CR>m`o<Esc>``:set nopaste<CR>
+nnoremap <silent>˚ :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 " open z-shell with F12
 function! ZShell()
@@ -91,11 +104,15 @@ let g:solarized_contrast="normal"
 "colorscheme solarized
 "set transparency=5
 set background=dark
+set t_Co=256
 if has('gui_running')
   colorscheme wombat
 else
   colorscheme desert
+  "colorscheme solarized
 endif
+set colorcolumn=80
+highlight ColorColumn ctermbg=233 guibg=#111111
 
 "folding settings
 "set foldmethod=indent   "fold based on indent
@@ -123,7 +140,7 @@ nmap <C-w>g% :tabedit %<CR>
 let NERDTreeIgnore=['.*\.pyc$']
 
 " display the cursor line and column
-set cuc
+"set cuc
 set cul
 
 " scroll the most recent window
@@ -131,7 +148,8 @@ nmap <C-n> <C-w>p<C-d><C-w>p
 nmap <C-p> <C-w>p<C-u><C-w>p
 
 " Pathogen
-execute pathogen#infect()
+call pathogen#infect()
+call pathogen#helptags()
 
 " vim powerline plugin
 set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
@@ -163,3 +181,6 @@ autocmd FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako source ~/.vim/bu
 map <Leader>gs :Git status<CR>
 map <Leader>gc :Git commit<CR>
 map <Leader>gp :Git push<CR>
+
+" swap parameter
+nmap gs :normal ?\s*[(),\[\]\n]\s*?e+1<CR>ma"ad/\s*,<CR>/[^\s,]/e+1<CR>mb"bd/\s*[,()\[\]\n]<CR>"aP`a"bP`a
