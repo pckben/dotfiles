@@ -73,3 +73,6 @@
 [submodule "vim/bundle/python-mode"]
 	path = vim/bundle/python-mode
 	url = git://github.com/klen/python-mode.git
+[submodule "vim/bundle/screen"]
+	path = vim/bundle/screen
+	url = https://github.com/ervandew/screen.git

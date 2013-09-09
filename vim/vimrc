@@ -31,7 +31,7 @@ au FileType make setlocal noexpandtab
 
 " In markdown file, press F5 to convert the file to HTML and preview in browser
 au FileType markdown
-  \ map <F5> :!multimarkdown % -o %<.html<CR>:!open %<.html<CR>
+  \ map <F5> :!multimarkdown % -o %<.html<CR>
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
