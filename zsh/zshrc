@@ -51,6 +51,7 @@ source /Users/Ben/dev/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 alias matlab='/Applications/MATLAB_R2011b.app/bin/matlab -nodesktop -nosplash'
 alias iphone='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'
 alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
+alias markdown='markdown_py'
 
 
 # these stuff are required to display Unicode characters in terminal for all

@@ -148,6 +148,11 @@ nmap <C-n> <C-w>p<C-d><C-w>p
 nmap <C-p> <C-w>p<C-u><C-w>p
 
 " Pathogen
+"let g:pathogen_disabled = [ "IndentAnything", "conque", "matchit", "taglist", "vim-autocomplpop", "vim-l9", "Command-T", "calendaar-vim", "closetag", "delimitMate", "nerdcommenter", "nerdtree", "powerline", "python-mode", "suckless", "supertab", "syntastic", "tagbar", "tlib_vim", "utl.vim", "vim-abolish", "vim-addon-mw-utils", "vim-commentary", "vim-css-color", "vim-fugitive", "vim-misc", "vim-notes", "vim-repeat", "vim-snipmate", "vim-snippets", "vim-surround" ]
+if !has('gui_running')
+  "call add(g:pathogen_disabled, 'csscolor')
+endif
+
 call pathogen#infect()
 call pathogen#helptags()
 
