@@ -76,3 +76,9 @@
 [submodule "vim/bundle/screen"]
 	path = vim/bundle/screen
 	url = https://github.com/ervandew/screen.git
+[submodule "ultility/z"]
+	path = ultility/z
+	url = https://github.com/rupa/z.git
+[submodule "ultility/zsh-syntax-highlighting"]
+	path = ultility/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git

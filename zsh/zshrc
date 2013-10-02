@@ -37,16 +37,13 @@ plugins=(git last-working-dir macports osx)
 source $ZSH/oh-my-zsh.sh
 
 # colorgcc must be before /usr/bin
-export PATH=/Users/Ben/dev/colorgcc:/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/local/sphinx/bin:/opt/local/share/java/android-sdk-macosx/platform-tools:/opt/local/share/java/android-sdk-macosx/tools:/opt/local/share/java/android-sdk-macosx:/usr/local/Trolltech/Qt-4.7.4/bin:/Users/Ben/projects/scivey.com/app/Console:/Applications/MAMP/bin/php5/bin:/Applications/MAMP/Library/bin:/opt/local/bin:/opt/local/sbin:/Applications/Postgres.app/Contents/MacOS/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/X11/bin
-
-# OGRE3D
-export PATH=/Users/Ben/dev/OgreSDK/bin:/Users/Ben/dev/OgreSDK/lib:/Users/Ben/dev/OgreSDK/include:$PATH
+export PATH=$HOME/dotfiles/ultility/colorgcc:/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/local/sphinx/bin:/opt/local/share/java/android-sdk-macosx/platform-tools:/opt/local/share/java/android-sdk-macosx/tools:/opt/local/share/java/android-sdk-macosx:/usr/local/Trolltech/Qt-4.7.4/bin:/Applications/MAMP/bin/php5/bin:/Applications/MAMP/Library/bin:/opt/local/bin:/opt/local/sbin:/Applications/Postgres.app/Contents/MacOS/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/X11/bin
 
 # rupa z jumper
-. /Users/Ben/dev/z/z.sh
+. $HOME/dotfiles/ultility/z/z.sh
 
 # zsh-syntax-highlighting
-source /Users/Ben/dev/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $HOME/dotfiles/ultility/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 alias matlab='/Applications/MATLAB_R2011b.app/bin/matlab -nodesktop -nosplash'
 alias iphone='open /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneSimulator.platform/Developer/Applications/iPhone\ Simulator.app'

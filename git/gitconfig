@@ -1,0 +1,15 @@
+[user]
+	name = Ben Pham
+	email = pckben@gmail.com
+[core]
+	editor = vim
+[color]
+	ui = true
+[alias]
+	st = status
+	ci = commit
+	br = branch
+	co = checkout
+	df = diff
+	lg = log
+	rb = rebase
