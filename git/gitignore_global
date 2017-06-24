@@ -41,5 +41,6 @@ Thumbs.db
 ##########################
 *~
 .*.swp
+.netrwhist
 tags
 .ropeproject/

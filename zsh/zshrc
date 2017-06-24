@@ -10,6 +10,7 @@ ZSH_THEME="eastwood"
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
+alias mvim="/Applications/MacVim.app/Contents/MacOS/MacVim"
 
 # Set to this to use case-sensitive completion
 # CASE_SENSITIVE="true"
@@ -37,7 +38,7 @@ plugins=(git last-working-dir macports osx)
 source $ZSH/oh-my-zsh.sh
 
 # colorgcc must be before /usr/bin
-export PATH=$HOME/dotfiles/ultility/colorgcc:/opt/local/Library/Frameworks/Python.framework/Versions/2.7/bin:/opt/local/sphinx/bin:/opt/local/share/java/android-sdk-macosx/platform-tools:/opt/local/share/java/android-sdk-macosx/tools:/opt/local/share/java/android-sdk-macosx:/usr/local/Trolltech/Qt-4.7.4/bin:/Applications/MAMP/bin/php5/bin:/Applications/MAMP/Library/bin:/opt/local/bin:/opt/local/sbin:/Applications/Postgres.app/Contents/MacOS/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/X11/bin
+export PATH=$HOME/dotfiles/ultility/colorgcc:/opt/local/Library/Frameworks/Python.framework/Versions/3.6/bin:/opt/local/sphinx/bin:/opt/local/share/java/android-sdk-macosx/platform-tools:/opt/local/share/java/android-sdk-macosx/tools:/opt/local/share/java/android-sdk-macosx:/usr/local/Trolltech/Qt-4.7.4/bin:/Applications/MAMP/bin/php5/bin:/Applications/MAMP/Library/bin:/opt/local/bin:/opt/local/sbin:/Applications/Postgres.app/Contents/MacOS/bin:/usr/bin:/bin:/usr/sbin:/sbin:/usr/local/bin:/opt/X11/bin:/usr/X11/bin:/opt/local/lib/mysql56/bin
 
 # rupa z jumper
 . $HOME/dotfiles/ultility/z/z.sh

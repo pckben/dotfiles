@@ -14,3 +14,16 @@
 	df = diff
 	lg = log
 	rb = rebase
+	
+# For Windows:
+# create ~/.bashrc and add: export PATH="/c/Program Files (x86)/Vim/vim74:$PATH"
+#[diff]
+#  tool = "gvimdiff"
+#[difftool "gvimdiff"]
+#  cmd = "gvim -d" "$LOCAL" "$REMOTE"
+#[difftool]
+#  prompt = false
+#[merge]
+#	tool = gvimdiff
+[push]
+	default = simple

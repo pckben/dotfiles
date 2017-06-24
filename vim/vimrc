@@ -1,14 +1,28 @@
-set nocompatible				" use Vim settings instead of Vi
-set backspace=indent,eol,start	" allow backspacing in insert mode
-set history=700					" number of commands to keep in history for undo
-set ruler						" always show cursor position
-set incsearch					" incremental searching
-set ignorecase " ignore case when searching
-set smartcase  " ... except when search pattern contains an uppercase char
-"set hlsearch					" highlight search matches
-set number						" show line number
-set tw=79 "width of document (used by gd)
-set fo-=t " don't automatically wrap text when typing
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Set vim runtime path to a customized portable directory
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" set default 'runtimepath' (without ~/.vim folders)
+let &runtimepath = printf('%s/vimfiles,%s,%s/vimfiles/after', $VIM, $VIMRUNTIME, $VIM)
+" what is the name of the directory containing this file?
+let s:portable = expand('<sfile>:p:h')
+" add the directory to 'runtimepath'
+let &runtimepath = printf('%s,%s,%s/after', s:portable, &runtimepath, s:portable)
+" start VIM using:
+" vim -u /path/to/portable/vim/vimrc
+" or load this file from ~/.vimrc or ~/_vimrc
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+
+set nocompatible               " use Vim settings instead of Vi
+set backspace=indent,eol,start " allow backspacing in insert mode
+set history=700                " number of commands to keep in history for undo
+set ruler                      " always show cursor position
+set incsearch                  " incremental searching
+set ignorecase                 " ignore case when searching
+set smartcase                  " ... except when search pattern contains an uppercase char
+"set hlsearch                   " highlight search matches
+set number                     " show line number
+set tw=79                      " width of document (used by gd)
+set fo-=t                      " don't automatically wrap text when typing
 set scrolloff=3
 "set mouse
 set mouse=a
@@ -16,8 +30,7 @@ set mouse=a
 syntax on
 filetype plugin indent on
 
-" Auto command stuff
-"
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 :au BufReadPost * 
 	\ if line("'\"") > 1 && line("'\"") <= line("$") | 
 	\	exe "normal! g`\"" | 
@@ -40,24 +53,35 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
 endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Enhanced keyboard mappings
-"			
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " save file in normal/insert mode
-map <F2> :w<CR>
+map  <F2> :w<CR>
 imap <F2> <ESC>:w<CR>a
 " switch between header/source file
-map <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
+map  <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
 " make file
-map	<F7> :wa<CR>:!make<CR><CR>
+map	 <F7> :wa<CR>:!make<CR><CR>
 
 " Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
 nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
 nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
 nnoremap <silent><A-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><A-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
+" A-j and A-k on Windows
+nnoremap <silent>ê :set paste<CR>m`o<Esc>``:set nopaste<CR>
+nnoremap <silent>ë :set paste<CR>m`O<Esc>``:set nopaste<CR>
+" A-j and A-k on Mac OSX
 nnoremap <silent>âˆ† :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent>Ëš :set paste<CR>m`O<Esc>``:set nopaste<CR>
+
+" the "smash" mappings for <ESC> key: just smash the k,j keys at the same time!
+inoremap jk <esc>
+inoremap kj <esc>
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " open z-shell with F12
 function! ZShell()
@@ -66,9 +90,6 @@ function! ZShell()
   :10winc _
 endfunction
 
-" the "smash" mappings for <ESC> key: just smash the k,j keys at the same time!
-inoremap jk <esc>
-inoremap kj <esc>
 
 set tabstop=2					"
 set shiftwidth=2
@@ -94,10 +115,12 @@ set guioptions-=l
 set guioptions-=R
 set guioptions-=r
 set guioptions+=c " use console dialogs
+set guioptions-=m " no GUI menu
+set guioptions-=T " no GUI toolbar
 
-"--------------
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Color Scheme
-"--------------
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "set background=light
 let g:solarized_termcolors=256
 let g:solarized_contrast="normal"
@@ -113,7 +136,11 @@ else
 endif
 set colorcolumn=80
 highlight ColorColumn ctermbg=233 guibg=#111111
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" Folding
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 "folding settings
 "set foldmethod=indent   "fold based on indent
 "set foldnestmax=10      "deepest fold is 10 levels
@@ -130,14 +157,12 @@ function! MyFoldText()
   return v:folddashes . sub
 endfunction
 :set foldtext=MyFoldText()
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
 " Maximizing current window in a new tab
 nmap <C-w>g% :tabedit %<CR>
 
 :set cinkeys-=0#    " disable putting C/C++ lines starting with # in the first column
-
-" NERDTree ignore patterns
-let NERDTreeIgnore=['.*\.pyc$']
 
 " display the cursor line and column
 "set cuc
@@ -148,7 +173,41 @@ nmap <C-n> <C-w>p<C-d><C-w>p
 nmap <C-p> <C-w>p<C-u><C-w>p
 
 " Pathogen
-"let g:pathogen_disabled = [ "IndentAnything", "conque", "matchit", "taglist", "vim-autocomplpop", "vim-l9", "Command-T", "calendaar-vim", "closetag", "delimitMate", "nerdcommenter", "nerdtree", "powerline", "python-mode", "suckless", "supertab", "syntastic", "tagbar", "tlib_vim", "utl.vim", "vim-abolish", "vim-addon-mw-utils", "vim-commentary", "vim-css-color", "vim-fugitive", "vim-misc", "vim-notes", "vim-repeat", "vim-snipmate", "vim-snippets", "vim-surround" ]
+      \ "web-indent",
+      \ "conque",
+      \ "matchit",
+      \ "taglist",
+      \ "vim-autocomplpop",
+      \ "vim-l9",
+      \ "Command-T",
+      \ "calendaar-vim",
+      \ "closetag",
+      \ "delimitMate",
+      \ "nerdcommenter",
+      \ "nerdtree",
+      \ "powerline",
+      \ "python-mode",
+      \ "suckless",
+      \ "supertab",
+      \ "syntastic",
+      \ "tagbar",
+      \ "tlib_vim",
+      \ "utl.vim",
+      \ "vim-abolish",
+      \ "vim-addon-mw-utils",
+      \ "vim-commentary",
+      \ "vim-css-color",
+      \ "vim-fugitive",
+      \ "vim-misc",
+      \ "vim-notes",
+      \ "vim-repeat",
+      \ "vim-snipmate",
+      \ "vim-snippets",
+      \ "vim-surround",
+let g:pathogen_disabled = [
+      \ "IndentAnything",
+      \ ]
+
 if !has('gui_running')
   "call add(g:pathogen_disabled, 'csscolor')
 endif
@@ -156,19 +215,22 @@ endif
 call pathogen#infect()
 call pathogen#helptags()
 
-" vim powerline plugin
-set rtp+=~/.vim/bundle/powerline/powerline/bindings/vim
-
 " open NERDTree and Taglist on startup
 "autocmd VimEnter * NERDTree
 "autocmd VimEnter * wincmd p
 "autocmd VimEnter * Tlist
 "execute "normal <C-w>2h<C-w>K<C-w>j<C-w>h<C-w>K<C-w>2j<C-w>L"
 
-" Must set cmd to use MacPorts ctags
-let Tlist_Ctags_Cmd='/opt/local/bin/ctags'
+" Must set cmd to use ctags
+let Tlist_Ctags_Cmd='ctags'
 " Don't waste 3 columns for the fold column display
-let Tlist_Enable_Fold_Column = 0
+"let Tlist_Enable_Fold_Column = 0
+
+" NERDTree ignore patterns
+let NERDTreeIgnore=['.*\.pyc$']
+
+" NERDTree ignore patterns
+let NERDTreeIgnore=['.*\.pyc$']
 
 map <F10> :NERDTree<CR>
 map <F11> :TagbarToggle<CR>
@@ -176,11 +238,15 @@ map <F12> :call ZShell()<CR>
 
 
 " Auto update taglist on every file write
-autocmd BufWritePost * :TlistUpdate
+"autocmd BufWritePost * :TlistUpdate
 
 " Only load CloseTag plugin for HTML/XML file"
 autocmd FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
-autocmd FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako source ~/.vim/bundle/closetag/plugin/closetag.vim
+autocmd FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako 
+      \ exe 'source '.s:portable.'/bundle/closetag/plugin/closetag.vim'
+
+" vim powerline plugin
+let rtp = printf('%s,%s/%s', &runtimepath, s:portable, 'bundle/powerline/powerline/bindings/vim')
 
 " Fugitive
 map <Leader>gs :Git status<CR>
@@ -189,3 +255,54 @@ map <Leader>gp :Git push<CR>
 
 " swap parameter
 nmap gs :normal ?\s*[(),\[\]\n]\s*?e+1<CR>ma"ad/\s*,<CR>/[^\s,]/e+1<CR>mb"bd/\s*[,()\[\]\n]<CR>"aP`a"bP`a
+
+if has("gui_win32")
+  set guifont=Consolas:h11:cANSI
+  set lines=999 columns=999
+endif
+
+" autoload so we can switch conveniently between Visual Studio and vim
+set autoread
+
+" Fuzzy Finder
+map <Leader>f :FufFile **/<CR>
+map <Leader>b :FufBuffer<CR>
+
+au FileType typescript
+  \ setlocal shiftwidth=4 |
+  \ setlocal tabstop=4
+
+" Add snippets to typescript"
+let g:snipMate = {}
+let g:snipMate.scope_aliases = {}
+let g:snipMate.scope_aliases['typescript'] = 'javascript'
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" EasyMotion
+" Usage:
+" :h easymotion
+" <Leader><Leader>s Find(Search) {char} forward and backward.
+" Find characters: s,f,F,t,T
+" Move to word: w,W,b,B,e,E,ge,gE
+" Move to line: j,k
+" Find next: n,N
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Bi-directional find motion
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+"nmap s <Plug>(easymotion-s)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+"nmap s <Plug>(easymotion-s2)
+
+" Turn on case sensitive feature
+"let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+map <Space> <Plug>(easymotion-s2)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
