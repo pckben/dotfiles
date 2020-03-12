@@ -129,7 +129,8 @@ let g:solarized_contrast="normal"
 set background=dark
 set t_Co=256
 if has('gui_running')
-  colorscheme wombat
+  " colorscheme wombat
+  colorscheme desert
 else
   colorscheme desert
   "colorscheme solarized
@@ -204,7 +205,7 @@ nmap <C-p> <C-w>p<C-u><C-w>p
       \ "vim-snipmate",
       \ "vim-snippets",
       \ "vim-surround",
-let g:pathogen_disabled = [
+" let g:pathogen_disabled = [
       \ "IndentAnything",
       \ ]
 
@@ -212,8 +213,8 @@ if !has('gui_running')
   "call add(g:pathogen_disabled, 'csscolor')
 endif
 
-call pathogen#infect()
-call pathogen#helptags()
+" call pathogen#infect()
+" call pathogen#helptags()
 
 " open NERDTree and Taglist on startup
 "autocmd VimEnter * NERDTree
