@@ -6,10 +6,16 @@ Windows
 
     git submodule init
     git submodule update
-    git config --global core.excludesfile ~\.gitignore_global
 
-    vim ~\_vimrc 
-    source path\to\dotfiles\vim\vimrc
+    mklink /j %USERPROFILE%\.vim %cd%\vim
+    mklink %USERPROFILE%\.vimrc %cd%\vim\vimrc
+    mklink %USERPROFILE%\.gitignore_global %cd%\git\gitignore_global
+    mklink %USERPROFILE%\.gitconfig %cd%\git\gitconfig
+
+    # git config --global core.excludesfile ~/.gitignore_global
+
+    # vim ~\_vimrc 
+    # source path\to\dotfiles\vim\vimrc
 
 PATHOGEN
 ========
