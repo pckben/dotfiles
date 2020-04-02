@@ -20,16 +20,9 @@ for x in $files; do
   fi
 done
 
-ln -s ~/dotfiles/zsh/zshrc ~/.zshrc
-ln -s ~/dotfiles/vim/vimrc ~/.vimrc
-ln -s ~/dotfiles/vim ~/.vim
-ln -s ~/dotfiles/git/gitconfig ~/.gitconfig
-ln -s ~/dotfiles/git/gitignore_global ~/.gitignore_global
-
-# config git, requires z-shell:
-vared -p "Git user.name: " git_username
-vared -p "Git user.email: " git_useremail
-git config --global core.excludesfile ~/.gitignore_global
-git config --global user.name $git_username
-git config --global user.email $git_useremail
+ln -s $(pwd)/zsh/zshrc ~/.zshrc
+ln -s $(pwd)/vim/vimrc ~/.vimrc
+ln -s $(pwd)/vim ~/.vim
+ln -s $(pwd)/git/gitconfig ~/.gitconfig
+ln -s $(pwd)/git/gitignore_global ~/.gitignore_global
 
