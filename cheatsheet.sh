@@ -28,6 +28,9 @@ echo "deb [ arch=amd64,arm64 ] https://repo.mongodb.org/apt/ubuntu bionic/mongod
 sudo apt-get update
 sudo apt-get install -y mongodb-org
 sudo systemctl start mongod
+# on WSL 2:
+sudo mkdir /data/db
+sudo mongod --fork --config /etc/mongod.conf
 
 
 # NVIDIA-docker
