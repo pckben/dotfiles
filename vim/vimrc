@@ -1,70 +1,51 @@
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Set vim runtime path to a customized portable directory
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" set default 'runtimepath' (without ~/.vim folders)
-let &runtimepath = printf('%s/vimfiles,%s,%s/vimfiles/after', $VIM, $VIMRUNTIME, $VIM)
-" what is the name of the directory containing this file?
-let s:portable = expand('<sfile>:p:h')
-" add the directory to 'runtimepath'
-let &runtimepath = printf('%s,%s,%s/after', s:portable, &runtimepath, s:portable)
-" start VIM using:
-" vim -u /path/to/portable/vim/vimrc
-" or load this file from ~/.vimrc or ~/_vimrc
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" On first run:
+"   :PluginInstall
+"
+"set nocompatible
+"filetype off
 
-set nocompatible               " use Vim settings instead of Vi
-set backspace=indent,eol,start " allow backspacing in insert mode
-set history=700                " number of commands to keep in history for undo
-set ruler                      " always show cursor position
-set incsearch                  " incremental searching
-set ignorecase                 " ignore case when searching
-set smartcase                  " ... except when search pattern contains an uppercase char
-"set hlsearch                   " highlight search matches
-set number                     " show line number
-set tw=79                      " width of document (used by gd)
-set fo-=t                      " don't automatically wrap text when typing
-set scrolloff=3
-"set mouse
+"set history=1000     " number of commands to keep in history for undo
+"set incsearch        " incremental searching
+"set ignorecase       " ignore case when searching
+"set smartcase        " ... except when search pattern contains an uppercase char
+""set hlsearch       " highlight search matches
+set number           " show line number
+set tw=79            " width of document (used by gd)
+set fo-=t            " don't automatically wrap text when typing
+"set scrolloff=3
 set mouse=a
+set guioptions-=L
+set guioptions-=l
+set guioptions-=R
+set guioptions-=r
+set guioptions+=c    " use console dialogs
+set guioptions-=m    " no GUI menu
+set guioptions-=T    " no GUI toolbar
 
-syntax on
-filetype plugin indent on
+set tabstop=2        "
+set shiftwidth=2
+set expandtab
+"set nowrap
+"set linebreak
+"set nolist           " list disables linebreak
+"set textwidth=80
+"set wrapmargin=0
+"set formatoptions+=l
+"set showbreak=...
+"set display=lastline " show partial lines wrapped past the bottom of the screen
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-:au BufReadPost * 
-	\ if line("'\"") > 1 && line("'\"") <= line("$") | 
-	\	exe "normal! g`\"" | 
-	\ endif
+"syntax enable
+set background=dark
+colorscheme desert
 
-au BufRead,BufNewFile *.jinja.html set filetype=htmljinja
-au BufRead,BufNewFile *.{md,markdown,mdown,mkd,mkdn,txt} setf markdown
+set colorcolumn=80
+highlight ColorColumn ctermbg=233 guibg=#111111
 
-" In Makefiles, use real tabs, not tabs expanded to spaces
-au FileType make setlocal noexpandtab
+"==============================================================================
 
-" In markdown file, press F5 to convert the file to HTML and preview in browser
-au FileType markdown
-  \ map <F5> :!multimarkdown % -o %<.html<CR>
-
-" Convenient command to see the difference between the current buffer and the
-" file it was loaded from, thus the changes you made.
-" Only define it when not defined already.
-if !exists(":DiffOrig")
-  command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
-		  \ | wincmd p | diffthis
-endif
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Enhanced keyboard mappings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" save file in normal/insert mode
-map  <F2> :w<CR>
-imap <F2> <ESC>:w<CR>a
-" switch between header/source file
-map  <F4> :e %:p:s,.h$,.X123X,:s,.cpp$,.h,:s,.X123X$,.cpp,<CR>
-" make file
-map	 <F7> :wa<CR>:!make<CR><CR>
+" the "smash" mappings for <ESC> key: just smash the k,j keys at the same time!
+inoremap jk <esc>
+inoremap kj <esc>
 
 " Ctrl-j/k deletes blank line below/above, and Alt-j/k inserts.
 nnoremap <silent><C-j> m`:silent +g/\m^\s*$/d<CR>``:noh<CR>
@@ -72,238 +53,108 @@ nnoremap <silent><C-k> m`:silent -g/\m^\s*$/d<CR>``:noh<CR>
 nnoremap <silent><A-j> :set paste<CR>m`o<Esc>``:set nopaste<CR>
 nnoremap <silent><A-k> :set paste<CR>m`O<Esc>``:set nopaste<CR>
 " A-j and A-k on Windows
-nnoremap <silent>� :set paste<CR>m`o<Esc>``:set nopaste<CR>
-nnoremap <silent>� :set paste<CR>m`O<Esc>``:set nopaste<CR>
+nnoremap <silent>ê :set paste<CR>m`o<Esc>``:set nopaste<CR>
+nnoremap <silent>ë :set paste<CR>m`O<Esc>``:set nopaste<CR>
 " A-j and A-k on Mac OSX
-nnoremap <silent>∆ :set paste<CR>m`o<Esc>``:set nopaste<CR>
-nnoremap <silent>˚ :set paste<CR>m`O<Esc>``:set nopaste<CR>
+nnoremap <silent>â :set paste<CR>m`o<Esc>``:set nopaste<CR>
+nnoremap <silent>Ë :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
-" the "smash" mappings for <ESC> key: just smash the k,j keys at the same time!
-inoremap jk <esc>
-inoremap kj <esc>
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"==============================================================================
+" Vundle
 
-" open z-shell with F12
-function! ZShell()
-  " Open ZSH with Conque in a split window with height=10
-  :ConqueTermSplit zsh
-  :10winc _
-endfunction
+" set the runtime path to include Vundle and initialize
+set rtp+=~/.vim/bundle/Vundle.vim
+call vundle#begin()
 
+" let Vundle manage Vundle, required
+Plugin 'gmarik/Vundle.vim'
 
-set tabstop=2					"
-set shiftwidth=2
-set expandtab
-set cinoptions=l1     " indent C switch statement properly
-"set smartindent
-" wrap complete word
-set nowrap
-set linebreak
-set nolist " list disables linebreak
-set textwidth=80
-":highlight OverLength ctermbg=red ctermfg=white guibg=#592929
-":match OverLength '\%>80v.\+'  " highlight lines longer than 80 column
-"match ErrorMsg '\%>80v.\+'
-set wrapmargin=0
-set formatoptions+=l
-set showbreak=...
-" show partial lines wrapped past the bottom of the screen
-set display=lastline
+" more Plugin commands ...
 
-set guioptions-=L
-set guioptions-=l
-set guioptions-=R
-set guioptions-=r
-set guioptions+=c " use console dialogs
-set guioptions-=m " no GUI menu
-set guioptions-=T " no GUI toolbar
+call vundle#end()            " required
+filetype plugin indent on    " required
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Color Scheme
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"set background=light
-let g:solarized_termcolors=256
-let g:solarized_contrast="normal"
+"==============================================================================
+" vimawesome.com
+"
+Plugin 'altercation/vim-colors-solarized'
+"let g:solarized_termcolors=256
 "colorscheme solarized
-"set transparency=5
-set background=dark
-set t_Co=256
-if has('gui_running')
-  " colorscheme wombat
-  colorscheme desert
-else
-  colorscheme desert
-  "colorscheme solarized
-endif
-set colorcolumn=80
-highlight ColorColumn ctermbg=233 guibg=#111111
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" Folding
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"folding settings
-"set foldmethod=indent   "fold based on indent
-"set foldnestmax=10      "deepest fold is 10 levels
-"set foldlevel=2         "this is just what i use
-set foldlevelstart=99
-:hi Folded ctermbg=Black ctermfg=DarkGray
-" zo,zc toggling 1 fold
-" zm,zr for toggling folds
-" zM,zR for reducing/increasing fold levels
-" za toggle fold
-function! MyFoldText()
-  let line = getline(v:foldstart)
-  let sub = substitute(line, '/\*\|\*/\|{{{\d\=', '', 'g')
-  return v:folddashes . sub
-endfunction
-:set foldtext=MyFoldText()
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+Plugin 'tpope/vim-fugitive'   " :Gstatus
 
-" Maximizing current window in a new tab
-nmap <C-w>g% :tabedit %<CR>
+Plugin 'bling/vim-airline'
+Plugin 'ctrlpvim/ctrlp.vim'
 
-:set cinkeys-=0#    " disable putting C/C++ lines starting with # in the first column
+Plugin 'godlygeek/tabular'    " :Tab /=
+Plugin 'tpope/vim-sensible'   " defaults everyone can agree on
+" https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim
 
-" display the cursor line and column
-"set cuc
-set cul
+" vim-commentary
+" gcc comment a line
+" gc  comment a target of a motion (eg gcap)
+" gcgc uncomment a set of adjacent comment lines
+" Use in commands:
+"   :7,17Commentary
+"   :g/search text/Commentary
+" Adding new filetype support:
+"   autocmd FileType {filetype} setlocal commentstring=#\ %s
+Plugin 'tpope/vim-commentary'
 
-" scroll the most recent window
-nmap <C-n> <C-w>p<C-d><C-w>p
-nmap <C-p> <C-w>p<C-u><C-w>p
+Plugin 'tpope/vim-repeat'
 
-" Pathogen
-      \ "web-indent",
-      \ "conque",
-      \ "matchit",
-      \ "taglist",
-      \ "vim-autocomplpop",
-      \ "vim-l9",
-      \ "Command-T",
-      \ "calendaar-vim",
-      \ "closetag",
-      \ "delimitMate",
-      \ "nerdcommenter",
-      \ "nerdtree",
-      \ "powerline",
-      \ "python-mode",
-      \ "suckless",
-      \ "supertab",
-      \ "syntastic",
-      \ "tagbar",
-      \ "tlib_vim",
-      \ "utl.vim",
-      \ "vim-abolish",
-      \ "vim-addon-mw-utils",
-      \ "vim-commentary",
-      \ "vim-css-color",
-      \ "vim-fugitive",
-      \ "vim-misc",
-      \ "vim-notes",
-      \ "vim-repeat",
-      \ "vim-snipmate",
-      \ "vim-snippets",
-      \ "vim-surround",
-" let g:pathogen_disabled = [
-      \ "IndentAnything",
-      \ ]
+" vim-surround
+" cs"'    change " to '
+" cs'<q>  change ' to <q></q>
+" cst"    change <> to "
+" ds"     remove surround
+" ysiw]   add surround ] to text object iw, no space, or [ with space
+" yss)    add ) to whole line
+" Visual mode: V, follow by S<p class="important">
+Plugin 'tpope/vim-surround'
 
-if !has('gui_running')
-  "call add(g:pathogen_disabled, 'csscolor')
-endif
-
-" call pathogen#infect()
-" call pathogen#helptags()
-
-" open NERDTree and Taglist on startup
-"autocmd VimEnter * NERDTree
-"autocmd VimEnter * wincmd p
-"autocmd VimEnter * Tlist
-"execute "normal <C-w>2h<C-w>K<C-w>j<C-w>h<C-w>K<C-w>2j<C-w>L"
-
-" Must set cmd to use ctags
-let Tlist_Ctags_Cmd='ctags'
-" Don't waste 3 columns for the fold column display
-"let Tlist_Enable_Fold_Column = 0
-
+"
+" NERDTree
+"
+Plugin 'scrooloose/nerdtree'
+map <F10> :NERDTreeToggle<CR>
 " NERDTree ignore patterns
 let NERDTreeIgnore=['.*\.pyc$']
 
-" NERDTree ignore patterns
-let NERDTreeIgnore=['.*\.pyc$']
 
-map <F10> :NERDTree<CR>
-map <F11> :TagbarToggle<CR>
-map <F12> :call ZShell()<CR>
+" tagbar: browse the tags and have an overview of a file's structure
+Plugin 'majutsushi/tagbar'
+nmap <F8> :TagbarToggle<CR>
 
 
-" Auto update taglist on every file write
-"autocmd BufWritePost * :TlistUpdate
+Plugin 'thaerkh/vim-workspace'
+let g:workspace_autocreate = 1
 
-" Only load CloseTag plugin for HTML/XML file"
-autocmd FileType html,htmldjango,jinjahtml,eruby,mako let b:closetag_html_style=1
-autocmd FileType html,xhtml,xml,htmldjango,jinjahtml,eruby,mako 
-      \ exe 'source '.s:portable.'/bundle/closetag/plugin/closetag.vim'
+"==============================================================================
+" EasyMotion: jumpto anywhere with minimal keystrokes
+"
+Plugin 'easymotion/vim-easymotion'
+" find motion \\s \\f
+" word motion \\w
+" Line motions: \\j \\k
+" repeat last find motion \\s<CR>
+let g:EasyMotion_smartcase = 1  " turn on case-insensitive
+" `s{char}{label}
+"nmap s <Plug>(easymotion-overwin-f)
+" `s{char}{char}{label}
+nmap s <Plug>(easymotion-overwin-f2)
+" other mappable:
+"   easymotion-next
+"   easymotion-prev
+"   easymotion-repeat
+"   easymotion-lineforward
+"   easymotion-linebackward
+"   easymotion-sl line variant
+"   easymotion-bd-sl   line, bidirectional variant
+" enhanced search
+map / <Plug>(easymotion-sn)
+omap / <Plug>(easymotion-tn)
+map n <Plug>(easymotion-next)
+map N <Plug>(easymotion-prev)
 
-" vim powerline plugin
-let rtp = printf('%s,%s/%s', &runtimepath, s:portable, 'bundle/powerline/powerline/bindings/vim')
 
-" Fugitive
-map <Leader>gs :Git status<CR>
-map <Leader>gc :Git commit<CR>
-map <Leader>gp :Git push<CR>
-
-" swap parameter
-nmap gs :normal ?\s*[(),\[\]\n]\s*?e+1<CR>ma"ad/\s*,<CR>/[^\s,]/e+1<CR>mb"bd/\s*[,()\[\]\n]<CR>"aP`a"bP`a
-
-if has("gui_win32")
-  set guifont=Consolas:h11:cANSI
-  set lines=999 columns=999
-endif
-
-" autoload so we can switch conveniently between Visual Studio and vim
-set autoread
-
-" Fuzzy Finder
-map <Leader>f :FufFile **/<CR>
-map <Leader>b :FufBuffer<CR>
-
-au FileType typescript
-  \ setlocal shiftwidth=4 |
-  \ setlocal tabstop=4
-
-" Add snippets to typescript"
-let g:snipMate = {}
-let g:snipMate.scope_aliases = {}
-let g:snipMate.scope_aliases['typescript'] = 'javascript'
-
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" EasyMotion
-" Usage:
-" :h easymotion
-" <Leader><Leader>s Find(Search) {char} forward and backward.
-" Find characters: s,f,F,t,T
-" Move to word: w,W,b,B,e,E,ge,gE
-" Move to line: j,k
-" Find next: n,N
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-"let g:EasyMotion_do_mapping = 0 " Disable default mappings
-
-" Bi-directional find motion
-" Jump to anywhere you want with minimal keystrokes, with just one key binding.
-" `s{char}{label}`
-"nmap s <Plug>(easymotion-s)
-" or
-" `s{char}{char}{label}`
-" Need one more keystroke, but on average, it may be more comfortable.
-"nmap s <Plug>(easymotion-s2)
-
-" Turn on case sensitive feature
-"let g:EasyMotion_smartcase = 1
-
-" JK motions: Line motions
-map <Leader>j <Plug>(easymotion-j)
-map <Leader>k <Plug>(easymotion-k)
-map <Space> <Plug>(easymotion-s2)
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""

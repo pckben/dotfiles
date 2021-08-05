@@ -15,8 +15,8 @@ files=[
 ]
 
 for x in $files; do
-  if [ -f ~/.zshrc ]; then
-    mv ~/.zshrc $backup
+  if [ -f $x ]; then
+    mv $x $backup
   fi
 done
 
@@ -26,3 +26,5 @@ ln -s $(pwd)/vim ~/.vim
 ln -s $(pwd)/git/gitconfig ~/.gitconfig
 ln -s $(pwd)/git/gitignore_global ~/.gitignore_global
 
+# Install ctags
+sudo apt-get install ctags
