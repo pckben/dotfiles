@@ -61,34 +61,33 @@ nnoremap <silent>Ë :set paste<CR>m`O<Esc>``:set nopaste<CR>
 
 "==============================================================================
 " Vundle
-
-" set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim " set the runtime path to include Vundle and initialize
 call vundle#begin()
 
 " let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+Plugin 'VundleVim/Vundle.vim'
 
 " more Plugin commands ...
-
-call vundle#end()            " required
-filetype plugin indent on    " required
-
-"==============================================================================
-" vimawesome.com
+" seemore: vimawesome.com
 "
+
 Plugin 'altercation/vim-colors-solarized'
 "let g:solarized_termcolors=256
 "colorscheme solarized
 
+Plugin 'L9'                   " script library
 Plugin 'tpope/vim-fugitive'   " :Gstatus
 
 Plugin 'bling/vim-airline'
-Plugin 'ctrlpvim/ctrlp.vim'
-
+"Plugin 'wincent/command-t'    " Fast file navigation, \t, requires vim-ruby
+Plugin 'ctrlpvim/ctrlp.vim'   " buffer management alternative to command-t
 Plugin 'godlygeek/tabular'    " :Tab /=
 Plugin 'tpope/vim-sensible'   " defaults everyone can agree on
 " https://github.com/tpope/vim-sensible/blob/master/plugin/sensible.vim
+
+Plugin 'nathanaelkane/vim-indent-guides'
 
 " vim-commentary
 " gcc comment a line
@@ -130,7 +129,7 @@ nmap <F8> :TagbarToggle<CR>
 Plugin 'thaerkh/vim-workspace'
 let g:workspace_autocreate = 1
 
-"==============================================================================
+"
 " EasyMotion: jumpto anywhere with minimal keystrokes
 "
 Plugin 'easymotion/vim-easymotion'
@@ -157,4 +156,7 @@ omap / <Plug>(easymotion-tn)
 map n <Plug>(easymotion-next)
 map N <Plug>(easymotion-prev)
 
+" All of your Plugins must be added before the following line
+call vundle#end()            " required
+filetype plugin indent on    " required
 
