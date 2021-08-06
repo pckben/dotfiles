@@ -75,10 +75,11 @@ Plugin 'VundleVim/Vundle.vim'
 
 Plugin 'altercation/vim-colors-solarized'
 "let g:solarized_termcolors=256
-"colorscheme solarized
 
 Plugin 'L9'                   " script library
 Plugin 'tpope/vim-fugitive'   " :Gstatus
+Plugin 'airblade/vim-gitgutter' " gutter to show +/- for git changes
+Plugin 'voldikss/vim-floaterm'  " floating term window
 
 Plugin 'bling/vim-airline'
 "Plugin 'wincent/command-t'    " Fast file navigation, \t, requires vim-ruby
@@ -126,8 +127,8 @@ Plugin 'majutsushi/tagbar'
 nmap <F8> :TagbarToggle<CR>
 
 
-Plugin 'thaerkh/vim-workspace'
-let g:workspace_autocreate = 1
+" Plugin 'thaerkh/vim-workspace'
+" let g:workspace_autocreate = 1
 
 "
 " EasyMotion: jumpto anywhere with minimal keystrokes
