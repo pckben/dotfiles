@@ -157,6 +157,9 @@ omap / <Plug>(easymotion-tn)
 map n <Plug>(easymotion-next)
 map N <Plug>(easymotion-prev)
 
+" Lanugages
+Plugin 'sheerun/vim-polyglot'
+
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
 filetype plugin indent on    " required
