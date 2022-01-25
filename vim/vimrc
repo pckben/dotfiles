@@ -157,6 +157,8 @@ omap / <Plug>(easymotion-tn)
 map n <Plug>(easymotion-next)
 map N <Plug>(easymotion-prev)
 
+Plugin 'tpope/vim-speeddating'
+
 " Lanugages
 Plugin 'sheerun/vim-polyglot'
 
