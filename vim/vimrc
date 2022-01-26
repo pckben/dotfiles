@@ -157,7 +157,9 @@ omap / <Plug>(easymotion-tn)
 map n <Plug>(easymotion-next)
 map N <Plug>(easymotion-prev)
 
-Plugin 'tpope/vim-speeddating'
+Plugin 'tpope/vim-speeddating'  " auto inc/dec date objects with C_x C_a
+" use ["x]gr{motion} to replace block with register x or default to clipboard _
+Plugin 'ReplaceWithRegister'    
 
 " Lanugages
 Plugin 'sheerun/vim-polyglot'
