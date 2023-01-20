@@ -12,7 +12,7 @@
 	br = branch
 	co = checkout
 	df = diff
-	lg = log
+	lg = log --pretty --oneline
 	rb = rebase
 	tree = log --graph --decorate --pretty=oneline --abbrev-commit --all
 	
