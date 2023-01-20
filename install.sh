@@ -9,16 +9,19 @@ mkdir -p ~/.z
 backup=~/dotfiles_backup
 mkdir -p $backup
 
-files=[
-  ~/.zshrc 
-  ~/.vimrc
-  ~/.vim
-  ~/.gitconfig
-  ~/.gitignore_global
-]
+files=(
+  "~/.zshrc"
+  "~/.vimrc"
+  "~/.vim"
+  "~/.gitconfig"
+  "~/.gitignore_global"
+)
 
-for x in $files; do
+echo backing up files to $backup
+for x in ${files[@]}; do
+  echo checking $x
   if [ -f $x ]; then
+    echo $x $backup
     mv $x $backup
   fi
 done
