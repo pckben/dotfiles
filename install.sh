@@ -1,3 +1,6 @@
+#!/bin/bash
+set -e
+
 git submodule init
 git submodule update
 
@@ -26,5 +29,8 @@ ln -s $(pwd)/vim ~/.vim
 ln -s $(pwd)/git/gitconfig ~/.gitconfig
 ln -s $(pwd)/git/gitignore_global ~/.gitignore_global
 
+# Install all vim Vundle plugins
+vim +PluginInstall +qall
+
 # Install ctags
-sudo apt-get install ctags
+sudo apt-get install exuberant-ctags
